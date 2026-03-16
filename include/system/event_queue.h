@@ -3,6 +3,21 @@
 
 #define _EVENT_QUEUE_SIZE 16
 
+#include <stdint.h>
+
+typedef enum
+{
+    MQTT_CMD_LED = 0,
+    MQTT_CMD_FAN,
+    MQTT_CMD_DOOR
+} mqtt_cmd_type_t;
+
+typedef struct
+{
+    mqtt_cmd_type_t cmd_type;
+    uint8_t value;
+} mqtt_command_t;
+
 typedef enum
 {
     EVENT_NONE = 0,

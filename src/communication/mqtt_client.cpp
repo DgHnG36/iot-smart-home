@@ -5,6 +5,12 @@ static PubSubClient mqttClient(wifi_client);
 
 static void mqtt_callback(char *topic, byte *payload, unsigned int length)
 {
+    if (length == 0 || length >= 32)
+    {
+        log_error("Received MQTT message with invalid length");
+        return;
+    }
+
     char message[32];
 
     memcpy(message, payload, length);
@@ -13,51 +19,52 @@ static void mqtt_callback(char *topic, byte *payload, unsigned int length)
     log_debug("MQTT message received");
 
     String topicStr = String(topic);
-    String messageStr = String(message);
+    uint8_t val = (String(message) == "1") ? 1 : 0;
+
+    mqtt_cmd_type_t cmd_type;
 
     // Led control
     if (topicStr == TOPIC_LED_CTL)
     {
-        if (messageStr == "1")
-        {
-            led_on();
-            log_debug("Turning LED on");
-        }
-        else if (messageStr == "0")
-        {
-            led_off();
-            log_debug("Turning LED off");
-        }
+        cmd_type = MQTT_CMD_LED;
     }
 
     // Fan control
-    if (topicStr == TOPIC_FAN_CTL)
+    else if (topicStr == TOPIC_FAN_CTL)
     {
-        if (messageStr == "1")
-        {
-            fan_on();
-            log_debug("Turning fan on");
-        }
-        else if (messageStr == "0")
-        {
-            fan_off();
-            log_debug("Turning fan off");
-        }
+        cmd_type = MQTT_CMD_FAN;
     }
 
     // Door control
-    if (topicStr == TOPIC_DOOR_CTL)
+    else if (topicStr == TOPIC_DOOR_CTL)
     {
-        if (messageStr == "1")
-        {
-            door_open();
-            log_info("Open door");
-        }
-        else if (messageStr == "0")
-        {
-            door_close();
-            log_info("Close door");
-        }
+        cmd_type = MQTT_CMD_DOOR;
+    }
+
+    else
+    {
+        log_error("Received MQTT message with unknown topic");
+        return;
+    }
+
+    mqtt_command_t *cmd = (mqtt_command_t *)malloc(sizeof(mqtt_command_t));
+    if (!cmd)
+    {
+        log_error("Failed to allocate memory for MQTT command");
+        return;
+    }
+
+    cmd->cmd_type = cmd_type;
+    cmd->value = val;
+
+    event_t ev;
+    ev.type = EVENT_MQTT_COMMAND;
+    ev.data = cmd;
+
+    if (!event_queue_push(ev))
+    {
+        log_error("Failed to push MQTT command event to queue");
+        free(cmd);
     }
 }
 
@@ -101,7 +108,7 @@ void mqtt_client_loop()
     mqttClient.loop();
 }
 
-void mqtt_publish_temperature(float temperature)
+void mqtt_client_publish_temperature(float temperature)
 {
     char buffer[16];
 
@@ -110,7 +117,7 @@ void mqtt_publish_temperature(float temperature)
     mqttClient.publish(TOPIC_TEMP, buffer);
 }
 
-void mqtt_publish_humidity(float humidity)
+void mqtt_client_publish_humidity(float humidity)
 {
     char buffer[16];
 
@@ -119,10 +126,7 @@ void mqtt_publish_humidity(float humidity)
     mqttClient.publish(TOPIC_HUMIDITY, buffer);
 }
 
-void mqtt_publish_motion(bool motion)
+void mqtt_client_publish_motion(bool motion)
 {
-    if (motion)
-        mqttClient.publish(TOPIC_MOTION, "1");
-    else
-        mqttClient.publish(TOPIC_MOTION, "0");
+    mqttClient.publish(TOPIC_MOTION, motion ? "1" : "0");
 }

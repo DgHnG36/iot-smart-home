@@ -5,8 +5,6 @@
 
 #define _MAX_TIMERS 10
 
-extern volatile SoftTimer timers[_MAX_TIMERS];
-
 typedef void (*timer_callback)();
 typedef struct
 {
@@ -15,6 +13,8 @@ typedef struct
     timer_callback callback;
     bool enabled;
 } SoftTimer;
+
+extern volatile SoftTimer timers[_MAX_TIMERS];
 
 void time_manager_init();
 

@@ -1,11 +1,40 @@
+# Test Suite
 
-This directory is intended for PlatformIO Test Runner and project tests.
+## Structure
 
-Unit Testing is a software testing method by which individual units of
-source code, sets of one or more MCU program modules together with associated
-control data, usage procedures, and operating procedures, are tested to
-determine whether they are fit for use. Unit testing finds problems early
-in the development cycle.
+```
+test/
+├── mocks/
+│   ├── Arduino.h
+│   ├── communication/
+│   ├── drivers/
+│   └── utils/
+├── test_climate_service/
+├── test_command_service/
+├── test_event_queue/
+├── test_motion_service/
+├── test_timer_manager/
+├── test_motion_hardware/
+├── test_mqtt_hardware/
+└── test_sensor_hardware/
+```
 
-More information about PlatformIO Unit Testing:
-- https://docs.platformio.org/en/latest/advanced/unit-testing/index.html
+## Run tests
+
+Native unit tests:
+
+```bash
+pio test -e native
+```
+
+Hardware integration tests:
+
+```bash
+pio test -e yolo_uno_test
+```
+
+Run one suite:
+
+```bash
+pio test -e native -f test_event_queue
+```

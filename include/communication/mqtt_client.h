@@ -4,9 +4,8 @@
 #include <PubSubClient.h>
 
 #include "communication/wifi_manager.h"
-#include "drivers/led.h"
-#include "drivers/fan.h"
-#include "drivers/servo_door.h"
+#include "system/event_queue.h"
+#include "utils/logger.h"
 
 void mqtt_client_init();
 void mqtt_client_loop();

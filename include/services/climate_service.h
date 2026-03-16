@@ -3,6 +3,7 @@
 
 #include "system/event_queue.h"
 #include "drivers/dht20.h"
+#include "drivers/fan.h"
 #include "communication/mqtt_client.h"
 #include "utils/logger.h"
 
