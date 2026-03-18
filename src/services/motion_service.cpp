@@ -25,7 +25,8 @@ void motion_service_handle(event_t *event)
     case MOTION_STATE_IDLE:
         log_info("Motion detected");
 
-        led_on();
+        led_off();
+        led_cyan_on();
         door_open();
         mqtt_client_publish_motion(door_is_open());
 
@@ -50,7 +51,7 @@ void motion_service_tick()
 
     if (millis() - last_motion_time >= MOTION_ACTIVE_TIMEOUT_MS)
     {
-        log_info("Motion timeout — returning to IDLE");
+        log_info("Motion timeout, returning to IDLE");
 
         led_off();
         door_close();

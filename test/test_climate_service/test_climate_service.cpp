@@ -35,10 +35,16 @@ void test_fan_on_above_threshold()
     trigger(31.0f, 50.0f);
     TEST_ASSERT_TRUE(mock_fan_state);
 }
-void test_fan_off_below_threshold()
+void test_fan_stays_off_at_high_threshold()
 {
     trigger(28.0f, 50.0f);
     TEST_ASSERT_FALSE(mock_fan_state);
+}
+
+void test_fan_turns_on_just_above_high_threshold()
+{
+    trigger(28.1f, 50.0f);
+    TEST_ASSERT_TRUE(mock_fan_state);
 }
 
 void test_fan_off_when_temp_normalizes()
@@ -57,6 +63,22 @@ void test_hysteresis_keeps_fan_on()
     TEST_ASSERT_TRUE(mock_fan_state);
 }
 
+void test_hysteresis_keeps_fan_on_at_low_threshold()
+{
+    trigger(31.0f, 50.0f);
+    TEST_ASSERT_TRUE(mock_fan_state);
+    trigger(25.0f, 50.0f);
+    TEST_ASSERT_TRUE(mock_fan_state);
+}
+
+void test_fan_turns_off_below_low_threshold()
+{
+    trigger(31.0f, 50.0f);
+    TEST_ASSERT_TRUE(mock_fan_state);
+    trigger(24.9f, 50.0f);
+    TEST_ASSERT_FALSE(mock_fan_state);
+}
+
 void test_ignores_other_events()
 {
     event_t other = {EVENT_MOTION_DETECTED, nullptr};
@@ -70,9 +92,12 @@ int main()
     UNITY_BEGIN();
     RUN_TEST(test_publishes_sensor_data);
     RUN_TEST(test_fan_on_above_threshold);
-    RUN_TEST(test_fan_off_below_threshold);
+    RUN_TEST(test_fan_stays_off_at_high_threshold);
+    RUN_TEST(test_fan_turns_on_just_above_high_threshold);
     RUN_TEST(test_fan_off_when_temp_normalizes);
     RUN_TEST(test_hysteresis_keeps_fan_on);
+    RUN_TEST(test_hysteresis_keeps_fan_on_at_low_threshold);
+    RUN_TEST(test_fan_turns_off_below_low_threshold);
     RUN_TEST(test_ignores_other_events);
     return UNITY_END();
 }

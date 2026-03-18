@@ -8,6 +8,7 @@
 #include "drivers/fan.h"
 #include "drivers/servo_door.h"
 #include "utils/logger.h"
+#include "config/config.h"
 
 void command_service_init();
 void command_service_handle(event_t *event);

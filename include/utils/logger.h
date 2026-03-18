@@ -2,14 +2,15 @@
 #define LOGGER_H
 
 #include <Arduino.h>
+#include <iostream>
 
-#define LOG_RESET "\033[0m"
+#define LOG_RESET "\x1B[0m"
 
-#define LOG_GREEN "\033[32m"
-#define LOG_BLUE "\033[34m"
-#define LOG_YELLOW "\033[33m"
-#define LOG_RED "\033[31m"
-#define LOG_BG_RED "\033[41m"
+#define LOG_GREEN "\x1B[32m"
+#define LOG_BLUE "\x1B[34m"
+#define LOG_YELLOW "\x1B[33m"
+#define LOG_RED "\x1B[31m"
+#define LOG_BG_RED "\x1B[41m"
 
 void log_init();
 

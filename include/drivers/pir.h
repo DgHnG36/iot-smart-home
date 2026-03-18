@@ -7,4 +7,4 @@
 void pir_init(uint8_t pin);
 bool pir_detected();
 
-#endif
+#endif // PIR_DRIVER_H

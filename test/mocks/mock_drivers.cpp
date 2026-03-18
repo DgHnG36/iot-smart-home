@@ -5,7 +5,9 @@ void mock_drivers_reset()
     mock_led_state = false;
     mock_fan_state = false;
     mock_door_state = false;
+    mock_led_brightness = 0;
     mock_temperature = 25.0f;
     mock_humidity = 60.0f;
     mock_pir_detected = false;
+    mock_light_raw = 3000;
 }

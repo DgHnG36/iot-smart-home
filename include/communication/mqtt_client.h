@@ -5,7 +5,6 @@
 
 #include "communication/wifi_manager.h"
 #include "system/event_queue.h"
-#include "utils/logger.h"
 
 void mqtt_client_init();
 void mqtt_client_loop();

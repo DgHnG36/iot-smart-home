@@ -10,4 +10,4 @@ void fan_off();
 
 bool fan_state();
 
-#endif
+#endif // FAN_DRIVER_H

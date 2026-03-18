@@ -36,10 +36,12 @@ extern const uint8_t PIN_PIR;
 extern const uint8_t PIN_LED;
 extern const uint8_t PIN_FAN;
 extern const uint8_t PIN_SERVO;
+extern const uint8_t PIN_LIGHT_SENSOR;
 
 /* SCHEDULER CONFIG */
 
 extern const uint32_t SENSOR_UPDATE_INTERVAL;
 extern const uint32_t MOTION_UPDATE_INTERVAL;
+extern const uint32_t LIGHT_SENSOR_UPDATE_INTERVAL;
 
 #endif

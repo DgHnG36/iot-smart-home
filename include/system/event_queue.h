@@ -25,7 +25,9 @@ typedef enum
     EVENT_MOTION_DETECTED,
 
     EVENT_MQTT_CONNECTED,
-    EVENT_MQTT_COMMAND
+    EVENT_MQTT_COMMAND,
+
+    EVENT_LIGHT_SENSOR_UPDATE
 } event_type_t;
 
 typedef struct

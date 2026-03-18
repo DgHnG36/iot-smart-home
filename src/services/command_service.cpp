@@ -2,6 +2,9 @@
 
 void command_service_init()
 {
+    led_init(PIN_LED);
+    fan_init(PIN_FAN);
+    servo_door_init(PIN_SERVO);
     log_info("Command service initialized");
 }
 
@@ -22,7 +25,7 @@ void command_service_handle(event_t *event)
     switch (cmd->cmd_type)
     {
     case MQTT_CMD_LED:
-        cmd->value ? led_on() : led_off();
+        cmd->value ? led_purple_on() : led_off();
         log_debug(cmd->value ? "LED ON" : "LED OFF");
         break;
 

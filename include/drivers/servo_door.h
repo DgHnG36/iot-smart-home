@@ -10,4 +10,4 @@ void door_close();
 
 bool door_is_open();
 
-#endif
+#endif // SERVO_DOOR_DRIVER_H

@@ -5,6 +5,7 @@
 #include "system/event_queue.h"
 
 #include "drivers/pir.h"
+#include "drivers/light_sensor.h"
 
 #include "config/config.h"
 

@@ -83,7 +83,9 @@ Run a single suite:
 ```bash
 pio test -e native -f test_event_queue
 pio test -e native -f test_climate_service
+pio test -e native -f test_light_service
 pio test -e native -f test_motion_service
+pio test -e native -f test_command_service
 ```
 
 ### Hardware Integration Tests
@@ -115,6 +117,7 @@ test/
 |- test_event_queue/
 |- test_timer_manager/
 |- test_climate_service/
+|- test_light_service/
 |- test_motion_service/
 |- test_command_service/
 |- test_mqtt_hardware/
