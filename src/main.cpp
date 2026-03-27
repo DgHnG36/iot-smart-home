@@ -56,6 +56,7 @@ void loop()
 
   if (event_queue_pop(&event))
   {
+    delay(2000);
     dispatch_event(&event);
   }
 }

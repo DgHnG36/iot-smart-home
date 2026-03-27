@@ -2,7 +2,7 @@
 
 static climate_state_t current_state = CLIMATE_STATE_NORMAL;
 
-static const float TEMP_HIGH_THRESHOLD = 28.0;
+static const float TEMP_HIGH_THRESHOLD = 30.0;
 static const float TEMP_LOW_THRESHOLD = 25.0;
 
 void climate_service_init()

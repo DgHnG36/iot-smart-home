@@ -1,4 +1,5 @@
 #include "services/light_service.h"
+#include "config/config.h"
 
 static const int RAW_DARK = 300;
 static const int RAW_BRIGHT = 3000;
@@ -23,6 +24,7 @@ static uint8_t map_clamp(int value, int in_min, int in_max,
 void light_service_init()
 {
     last_brightness = 0;
+    light_sensor_init(PIN_LIGHT_SENSOR);
     led_orange_on();
     log_info("Light service initialized");
 }
